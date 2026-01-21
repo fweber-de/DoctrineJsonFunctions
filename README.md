@@ -61,7 +61,7 @@ There is a docker-compose file with the correct mount but if you want to use jus
 
 ### php8
 ```bash
-docker run -it -v ${PWD}:/app scienta/php-composer:php8 /bin/bash -c "composer install && ./vendor/bin/phpunit"
+docker run -it -v ${PWD}:/app -w /app phpdockerio/php:8.1-cli /bin/bash -c "composer install && ./vendor/bin/phpunit"
 ```
 
 
