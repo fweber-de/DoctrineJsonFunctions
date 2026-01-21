@@ -1,0 +1,40 @@
+<?php
+
+namespace Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mssql;
+
+use Scienta\DoctrineJsonFunctions\Tests\Query\MssqlTestCase;
+
+class JsonValueTest extends MssqlTestCase
+{
+    public function testJsonValueForData()
+    {
+        $this->assertDqlProducesSql(
+            "SELECT JSON_VALUE(j.jsonData, '$.a') FROM Scienta\DoctrineJsonFunctions\Tests\Entities\JsonData j",
+            "SELECT JSON_VALUE(j0_.jsonData, '$.a') AS sclr_0 FROM JsonData j0_"
+        );
+    }
+
+    public function testJsonValueReturningUnsigned()
+    {
+        $this->assertDqlProducesSql(
+            "SELECT JSON_VALUE(j.jsonData, '$.a', UNSIGNED) FROM Scienta\DoctrineJsonFunctions\Tests\Entities\JsonData j",
+            "SELECT JSON_VALUE(j0_.jsonData, '$.a' RETURNING UNSIGNED) AS sclr_0 FROM JsonData j0_"
+        );
+    }
+
+    public function testJsonValueReturningDecimal()
+    {
+        $this->assertDqlProducesSql(
+            "SELECT JSON_VALUE('{\"item\": \"shoes\", \"price\": \"49.95\"}', '$.price', DECIMAL(4,2)) from Scienta\DoctrineJsonFunctions\Tests\Entities\Blank b",
+            "SELECT JSON_VALUE('{\"item\": \"shoes\", \"price\": \"49.95\"}', '$.price' RETURNING DECIMAL(4,2)) AS sclr_0 FROM Blank b0_"
+        );
+    }
+
+    public function testJsonValueForDataReturningVarchar()
+    {
+        $this->assertDqlProducesSql(
+            "SELECT JSON_VALUE(j.jsonData, '$.something', CHAR(255)) FROM Scienta\DoctrineJsonFunctions\Tests\Entities\JsonData j",
+            "SELECT JSON_VALUE(j0_.jsonData, '$.something' RETURNING CHAR(255)) AS sclr_0 FROM JsonData j0_"
+        );
+    }
+}

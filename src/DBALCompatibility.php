@@ -69,6 +69,14 @@ final class DBALCompatibility
     /**
      * @psalm-return class-string
      */
+    public static function mssqlDBPlatform(): string
+    {
+        return 'Doctrine\DBAL\Platforms\SQLServerPlatform';
+    }
+
+    /**
+     * @psalm-return class-string
+     */
     public static function mysqlAndMariaDBSharedPlatform(): string
     {
         if (!class_exists('\Doctrine\DBAL\Platforms\AbstractMySQLPlatform')) {
